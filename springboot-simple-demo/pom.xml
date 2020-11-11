@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>springboot-simple</artifactId>
+        <groupId>com.jgz</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>springboot-simple-demo</artifactId>
+
+    <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>com.jgz</groupId>-->
+            <!--<artifactId>springboot-simple-aliyun-oss</artifactId>-->
+            <!--<version>0.0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>com.jgz</groupId>
+            <artifactId>springboot-simple-jdbc</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jgz</groupId>
+            <artifactId>springboot-simple-mvc</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.jgz</groupId>-->
+            <!--<artifactId>springboot-simple-redis</artifactId>-->
+            <!--<version>0.0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>com.jgz</groupId>
+            <artifactId>springboot-simple-base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>mysql</groupId>-->
+            <!--<artifactId>mysql-connector-java</artifactId>-->
+            <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <configuration>
+                    <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
+                    <overwrite>true</overwrite>
+                    <verbose>true</verbose>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
