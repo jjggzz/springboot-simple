@@ -1,32 +1,32 @@
 package com.springboot.simple.exception;
 
+import com.springboot.simple.res.BaseResultEnum;
+
 /**
  * @author jgz
  * CreateTime 2020/4/23 11:26
  */
 public class GlobalException extends RuntimeException {
-    private Integer status = -1;
-    private String code = "SYS_HINT";
+    private Integer code;
     private String message;
 
-    public GlobalException(String message) {
+    public GlobalException(Integer code,String message) {
         super(message);
+        this.code = code;
         this.message = message;
     }
 
-    public Integer getStatus() {
-        return status;
+    public GlobalException(BaseResultEnum baseResultEnum) {
+        super(baseResultEnum.getMessage());
+        this.code = baseResultEnum.getCode();
+        this.message = baseResultEnum.getMessage();
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
