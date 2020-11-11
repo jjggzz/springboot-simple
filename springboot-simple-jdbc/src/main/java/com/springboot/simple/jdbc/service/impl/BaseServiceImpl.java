@@ -27,7 +27,6 @@ public class BaseServiceImpl<T extends BaseModel,D extends BaseModelMapper<T,E>,
     }
 
     public int delete(Long id){
-
         return this.mapper.deleteByPrimaryKey(id);
     }
 

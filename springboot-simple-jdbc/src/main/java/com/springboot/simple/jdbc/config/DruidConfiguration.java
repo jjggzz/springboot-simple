@@ -22,10 +22,10 @@ public class DruidConfiguration {
 
     /**
      * 注册ServletRegistrationBean
-     * @return
+     * @return ServletRegistrationBean
      */
     @Bean
-    public ServletRegistrationBean druidServlet() {
+    public ServletRegistrationBean<StatViewServlet> druidServlet() {
         ServletRegistrationBean<StatViewServlet> bean = new ServletRegistrationBean<>(new StatViewServlet(), "/druid/*");
         Map<String,String> map = new HashMap<>();
         map.put("loginUsername","admin");
@@ -36,10 +36,10 @@ public class DruidConfiguration {
 
     /**
      * 注册FilterRegistrationBean
-     * @return
+     * @return FilterRegistrationBean
      */
     @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
+    public FilterRegistrationBean<Filter> filterRegistrationBean() {
         FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new WebStatFilter());
         Map<String,String> map = new HashMap<>();
