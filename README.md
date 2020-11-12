@@ -101,16 +101,15 @@ private RedisUtils redisUtils;
 2)使用方式
 ````
     @GetMapping("user/{id}")
-    public ResultEntity<?> get(@PathVariable("id") Long id){
-        return new ResultEntity<UserModel>(ResultEnum.SUCCESS,userService.getById(id));
+    public ResultEntity<UserModel> get(@PathVariable("id") Long id){
+        return ResultEntity.success(userService.getById(id));
     }
 ````
   返回数据
 ````
 {
-    "status":1,
-    "code":"SYS_OK",
-    "message":"操作成功！！",
+    "code":1,
+    "message":"操作成功",
     "data":{
         "id":1,
         "createTime":"2020-03-29T01:24:57.000+0000",
@@ -132,7 +131,6 @@ private RedisUtils redisUtils;
 ````
 {
     "status":-1,
-    "code":"SYS_HINT",
     "message":"信息不存在",
     "data":null
 }
