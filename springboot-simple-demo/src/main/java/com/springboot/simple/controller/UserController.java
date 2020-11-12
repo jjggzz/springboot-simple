@@ -39,7 +39,7 @@ public class UserController{
     }
 
     @GetMapping("user/{id}")
-    public ResultEntity<UserModel> get(@PathVariable("id") Long id){
+    public ResultEntity<?> get(@PathVariable("id") Long id){
         return ResultEntity.success(userService.getById(id));
     }
 

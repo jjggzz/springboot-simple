@@ -82,4 +82,28 @@ public class ResultEntity<T> implements Serializable {
     public static <T> ResultEntity<T> failure(String message){
         return new ResultEntity<>(-1,message);
     }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }

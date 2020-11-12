@@ -25,12 +25,12 @@ public class ResultCollection {
 
         @Override
         public Integer getCode() {
-            return null;
+            return code;
         }
 
         @Override
         public String getMessage() {
-            return null;
+            return message;
         }
     }
 }
