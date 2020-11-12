@@ -3,7 +3,6 @@ package com.springboot.simple.jdbc.datasource;
 import com.springboot.simple.jdbc.annotation.DataSource;
 import com.springboot.simple.jdbc.properties.JdbcProperties;
 import com.springboot.simple.support.util.DateUtils;
-import com.springboot.simple.support.util.RandomUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -59,6 +58,7 @@ public class DataSourceAspect {
                 DataSource source = clazz.getAnnotation(DataSource.class);
                 if (DynamicDataSource.SLAVE.equals(source.value())){
                     if (CollectionUtils.isNotEmpty(jdbcProperties.getSlaveList())) {
+                        //如果有配置从库则随机生成一个数与从库数量取余,进行从库的选择
                         Random random = new Random(DateUtils.currentTimeInMillis());
                         DynamicDataSourceHolder.setDataSource(DynamicDataSource.SLAVE + (random.nextInt() % (jdbcProperties.getSlaveList().size())));
                     } else {
@@ -73,6 +73,7 @@ public class DataSourceAspect {
                 DataSource source = method.getAnnotation(DataSource.class);
                 if (DynamicDataSource.SLAVE.equals(source.value())){
                     if (CollectionUtils.isNotEmpty(jdbcProperties.getSlaveList())) {
+                        //如果有配置从库则随机生成一个数与从库数量取余,进行从库的选择
                         Random random = new Random(DateUtils.currentTimeInMillis());
                         DynamicDataSourceHolder.setDataSource(DynamicDataSource.SLAVE + (random.nextInt() % (jdbcProperties.getSlaveList().size())));
                     } else {

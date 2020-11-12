@@ -1,6 +1,7 @@
 server:
   port: 8080
 
+
 jdbc:
   master:
     driver-class-name: org.gjt.mm.mysql.Driver
@@ -16,9 +17,6 @@ jdbc:
       url: jdbc:mysql://127.0.0.1:3306/demo2
       username: root
       password: 123456
-
-
-
 
 mybatis:
   mapper-locations: classpath:mybatis/*.xml
