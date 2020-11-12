@@ -1,16 +1,22 @@
 package com.springboot.simple.jdbc.datasource;
 
 import com.springboot.simple.jdbc.annotation.DataSource;
+import com.springboot.simple.jdbc.properties.JdbcProperties;
+import com.springboot.simple.support.util.DateUtils;
+import com.springboot.simple.support.util.RandomUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Random;
 
 /**
  * 动态切换aop
@@ -22,12 +28,15 @@ import java.lang.reflect.Method;
 @Component
 public class DataSourceAspect {
 
+    @Autowired
+    private JdbcProperties jdbcProperties;
+
     @Pointcut("@annotation(com.springboot.simple.jdbc.annotation.DataSource)")
     public void annotationPointcut() {
     }
 
     @Before("annotationPointcut()")
-    public void before(JoinPoint point) throws Exception {
+    public void before(JoinPoint point) {
         Class<?> target = point.getTarget().getClass();
         MethodSignature signature = (MethodSignature) point.getSignature();
         // 默认使用目标类型的注解，如果没有则使用其实现接口的注解
@@ -45,17 +54,33 @@ public class DataSourceAspect {
 
     private void resolveDataSource(Class<?> clazz, Method method) {
         try {
-            Class<?>[] types = method.getParameterTypes();
             // 默认使用类型注解
             if (clazz.isAnnotationPresent(DataSource.class)) {
                 DataSource source = clazz.getAnnotation(DataSource.class);
-                DynamicDataSourceHolder.setDataSource(source.value());
+                if (DynamicDataSource.SLAVE.equals(source.value())){
+                    if (CollectionUtils.isNotEmpty(jdbcProperties.getSlaveList())) {
+                        Random random = new Random(DateUtils.currentTimeInMillis());
+                        DynamicDataSourceHolder.setDataSource(DynamicDataSource.SLAVE + (random.nextInt() % (jdbcProperties.getSlaveList().size())));
+                    } else {
+                        DynamicDataSourceHolder.setDataSource(DynamicDataSource.MASTER);
+                    }
+                } else {
+                    DynamicDataSourceHolder.setDataSource(DynamicDataSource.MASTER);
+                }
             }
             // 方法注解可以覆盖类型注解
-            Method m = clazz.getMethod(method.getName(), types);
-            if (m != null && m.isAnnotationPresent(DataSource.class)) {
-                DataSource source = m.getAnnotation(DataSource.class);
-                DynamicDataSourceHolder.setDataSource(source.value());
+            if (method.isAnnotationPresent(DataSource.class)) {
+                DataSource source = method.getAnnotation(DataSource.class);
+                if (DynamicDataSource.SLAVE.equals(source.value())){
+                    if (CollectionUtils.isNotEmpty(jdbcProperties.getSlaveList())) {
+                        Random random = new Random(DateUtils.currentTimeInMillis());
+                        DynamicDataSourceHolder.setDataSource(DynamicDataSource.SLAVE + (random.nextInt() % (jdbcProperties.getSlaveList().size())));
+                    } else {
+                        DynamicDataSourceHolder.setDataSource(DynamicDataSource.MASTER);
+                    }
+                } else {
+                    DynamicDataSourceHolder.setDataSource(DynamicDataSource.MASTER);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

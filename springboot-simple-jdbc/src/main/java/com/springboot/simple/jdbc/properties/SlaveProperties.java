@@ -10,8 +10,6 @@ import java.util.Properties;
  * @author JGZ
  * CreateTime 2020/3/29 10:37
  */
-@Component
-@ConfigurationProperties(prefix = "slave")
 public class SlaveProperties {
     private String driverClassName;
     private String url;

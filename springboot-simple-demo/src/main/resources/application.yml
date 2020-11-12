@@ -1,54 +1,22 @@
 server:
   port: 8080
 
+jdbc:
+  master:
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://127.0.0.1:3306/demo
+    username: root
+    password: 123456
+  slave-list:
+    - driver-class-name: org.gjt.mm.mysql.Driver
+      url: jdbc:mysql://127.0.0.1:3306/demo1
+      username: root
+      password: 123456
+    - driver-class-name: org.gjt.mm.mysql.Driver
+      url: jdbc:mysql://127.0.0.1:3306/demo2
+      username: root
+      password: 123456
 
-master:
-  driver-class-name: org.gjt.mm.mysql.Driver
-  url: jdbc:mysql://127.0.0.1:3306/demo
-  username: root
-  password: 123456
-  #附加配置，不配则使用默认值
-  min-idle: 10
-  initial-size: 10
-  max-active: 10
-  max-wait-millis: 400
-  time-between-eviction-runs-millis: 60000
-  min-evictable-idle-time-millis: 300000
-  validation-query: SELECT 1 FROM DUAL
-  test-while-idle: true
-  test-on-borrow: false
-  test-on-return: false
-  pool-prepared-statements: true
-  max-pool-prepared-statement-per-connection-size: 20
-  filters: stat,wall
-  use-global-data-source-stat: true
-  connection-properties:
-    mergeSql: true
-    slowSqlMillis: 500
-
-slave:
-  driver-class-name: org.gjt.mm.mysql.Driver
-  url: jdbc:mysql://127.0.0.1:3306/demo1
-  username: root
-  password: 123456
-  #附加配置，不配则使用默认值
-  min-idle: 5
-  initial-size: 5
-  max-active: 10
-  max-wait-millis: 200
-  time-between-eviction-runs-millis: 60000
-  min-evictable-idle-time-millis: 300000
-  validation-query: SELECT 1 FROM DUAL
-  test-while-idle: true
-  test-on-borrow: false
-  test-on-return: false
-  pool-prepared-statements: true
-  max-pool-prepared-statement-per-connection-size: 20
-  filters: stat,wall,log4j
-  use-global-data-source-stat: true
-  connection-properties:
-    mergeSql: true
-    slowSqlMillis: 500
 
 
 
@@ -78,4 +46,5 @@ mybatis:
 #    access-key-id:
 #    access-key-secret:
 #    support-cname: false
+
 #    domain-name:

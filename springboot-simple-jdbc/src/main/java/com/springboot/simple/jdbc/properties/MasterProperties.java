@@ -1,8 +1,5 @@
 package com.springboot.simple.jdbc.properties;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-
 import java.util.Properties;
 
 /**
@@ -10,8 +7,6 @@ import java.util.Properties;
  * @author JGZ
  * CreateTime 2020/3/29 10:23
  */
-@Component
-@ConfigurationProperties(prefix = "master")
 public class MasterProperties {
 
     private String driverClassName;

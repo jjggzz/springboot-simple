@@ -1,5 +1,7 @@
 package com.springboot.simple.service.impl;
 
+import com.springboot.simple.jdbc.annotation.DataSource;
+import com.springboot.simple.jdbc.datasource.DynamicDataSource;
 import com.springboot.simple.jdbc.service.impl.BaseServiceImpl;
 import com.springboot.simple.mapper.UserModelMapper;
 import com.springboot.simple.model.UserModel;
@@ -21,6 +23,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserModel, UserModelMapper,
         super.setMapper(mapper);
     }
 
+    @DataSource(DynamicDataSource.SLAVE)
     @Override
     public void save(UserModel userModel){
         insert(userModel);

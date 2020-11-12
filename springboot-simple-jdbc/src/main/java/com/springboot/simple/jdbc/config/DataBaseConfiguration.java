@@ -2,6 +2,7 @@ package com.springboot.simple.jdbc.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.springboot.simple.jdbc.datasource.DynamicDataSource;
+import com.springboot.simple.jdbc.properties.JdbcProperties;
 import com.springboot.simple.jdbc.properties.MasterProperties;
 import com.springboot.simple.jdbc.properties.SlaveProperties;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -18,9 +19,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * 数据库配置
@@ -34,10 +33,7 @@ public class DataBaseConfiguration {
     private Logger logger = LoggerFactory.getLogger(DataBaseConfiguration.class);
 
     @Autowired
-    private MasterProperties masterProperties;
-
-    @Autowired
-    private SlaveProperties slaveProperties;
+    private JdbcProperties jdbcProperties;
 
     private String mapperLocations;
 
@@ -51,30 +47,30 @@ public class DataBaseConfiguration {
     public DataSource masterDataSource() {
         logger.info("master datasource init start...");
         DruidDataSource druidDataSource = new DruidDataSource();
-        druidDataSource.setDriverClassName(masterProperties.getDriverClassName());
-        druidDataSource.setUrl(masterProperties.getUrl());
-        druidDataSource.setUsername(masterProperties.getUsername());
-        druidDataSource.setPassword(masterProperties.getPassword());
+        druidDataSource.setDriverClassName(jdbcProperties.getMaster().getDriverClassName());
+        druidDataSource.setUrl(jdbcProperties.getMaster().getUrl());
+        druidDataSource.setUsername(jdbcProperties.getMaster().getUsername());
+        druidDataSource.setPassword(jdbcProperties.getMaster().getPassword());
         //其他配置
-        druidDataSource.setInitialSize(masterProperties.getInitialSize());
-        druidDataSource.setMinIdle(masterProperties.getMinIdle());
-        druidDataSource.setMaxWait(masterProperties.getMaxWaitMillis());
-        druidDataSource.setMaxActive(masterProperties.getMaxActive());
-        druidDataSource.setTimeBetweenEvictionRunsMillis(masterProperties.getTimeBetweenEvictionRunsMillis());
-        druidDataSource.setMinEvictableIdleTimeMillis(masterProperties.getMinEvictableIdleTimeMillis());
-        druidDataSource.setValidationQuery(masterProperties.getValidationQuery());
-        druidDataSource.setTestWhileIdle(masterProperties.getTestWhileIdle());
-        druidDataSource.setTestOnBorrow(masterProperties.getTestOnBorrow());
-        druidDataSource.setTestOnReturn(masterProperties.getTestOnReturn());
-        druidDataSource.setPoolPreparedStatements(masterProperties.getPoolPreparedStatements());
+        druidDataSource.setInitialSize(jdbcProperties.getMaster().getInitialSize());
+        druidDataSource.setMinIdle(jdbcProperties.getMaster().getMinIdle());
+        druidDataSource.setMaxWait(jdbcProperties.getMaster().getMaxWaitMillis());
+        druidDataSource.setMaxActive(jdbcProperties.getMaster().getMaxActive());
+        druidDataSource.setTimeBetweenEvictionRunsMillis(jdbcProperties.getMaster().getTimeBetweenEvictionRunsMillis());
+        druidDataSource.setMinEvictableIdleTimeMillis(jdbcProperties.getMaster().getMinEvictableIdleTimeMillis());
+        druidDataSource.setValidationQuery(jdbcProperties.getMaster().getValidationQuery());
+        druidDataSource.setTestWhileIdle(jdbcProperties.getMaster().getTestWhileIdle());
+        druidDataSource.setTestOnBorrow(jdbcProperties.getMaster().getTestOnBorrow());
+        druidDataSource.setTestOnReturn(jdbcProperties.getMaster().getTestOnReturn());
+        druidDataSource.setPoolPreparedStatements(jdbcProperties.getMaster().getPoolPreparedStatements());
         try {
-            druidDataSource.setFilters(masterProperties.getFilters());
+            druidDataSource.setFilters(jdbcProperties.getMaster().getFilters());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        druidDataSource.setMaxPoolPreparedStatementPerConnectionSize(masterProperties.getMaxPoolPreparedStatementPerConnectionSize());
-        druidDataSource.setUseGlobalDataSourceStat(masterProperties.getUseGlobalDataSourceStat());
-        druidDataSource.setConnectProperties(masterProperties.getConnectionProperties());
+        druidDataSource.setMaxPoolPreparedStatementPerConnectionSize(jdbcProperties.getMaster().getMaxPoolPreparedStatementPerConnectionSize());
+        druidDataSource.setUseGlobalDataSourceStat(jdbcProperties.getMaster().getUseGlobalDataSourceStat());
+        druidDataSource.setConnectProperties(jdbcProperties.getMaster().getConnectionProperties());
         logger.info("master datasource init success...");
         return druidDataSource;
     }
@@ -83,36 +79,40 @@ public class DataBaseConfiguration {
      * 从库
      * @return
      */
-    @Bean(name = "slave")
-    public DataSource slaveDataSource() {
+    @Bean(name = "slaveList")
+    public List<DataSource> slaveDataSource() {
         logger.info("slave datasource init start...");
-        DruidDataSource druidDataSource = new DruidDataSource();
-        druidDataSource.setDriverClassName(slaveProperties.getDriverClassName());
-        druidDataSource.setUrl(slaveProperties.getUrl());
-        druidDataSource.setUsername(slaveProperties.getUsername());
-        druidDataSource.setPassword(slaveProperties.getPassword());
-        //其他配置
-        druidDataSource.setInitialSize(slaveProperties.getInitialSize());
-        druidDataSource.setMinIdle(slaveProperties.getMinIdle());
-        druidDataSource.setMaxWait(slaveProperties.getMaxWaitMillis());
-        druidDataSource.setMaxActive(slaveProperties.getMaxActive());
-        druidDataSource.setTimeBetweenEvictionRunsMillis(slaveProperties.getTimeBetweenEvictionRunsMillis());
-        druidDataSource.setMinEvictableIdleTimeMillis(slaveProperties.getMinEvictableIdleTimeMillis());
-        druidDataSource.setValidationQuery(slaveProperties.getValidationQuery());
-        druidDataSource.setTestWhileIdle(slaveProperties.getTestWhileIdle());
-        druidDataSource.setTestOnBorrow(slaveProperties.getTestOnBorrow());
-        druidDataSource.setTestOnReturn(slaveProperties.getTestOnReturn());
-        druidDataSource.setPoolPreparedStatements(slaveProperties.getPoolPreparedStatements());
-        try {
-            druidDataSource.setFilters(slaveProperties.getFilters());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        List<DataSource> dataSourceList = new ArrayList<>();
+        for (SlaveProperties properties : jdbcProperties.getSlaveList()) {
+            DruidDataSource druidDataSource = new DruidDataSource();
+            druidDataSource.setDriverClassName(properties.getDriverClassName());
+            druidDataSource.setUrl(properties.getUrl());
+            druidDataSource.setUsername(properties.getUsername());
+            druidDataSource.setPassword(properties.getPassword());
+            //其他配置
+            druidDataSource.setInitialSize(properties.getInitialSize());
+            druidDataSource.setMinIdle(properties.getMinIdle());
+            druidDataSource.setMaxWait(properties.getMaxWaitMillis());
+            druidDataSource.setMaxActive(properties.getMaxActive());
+            druidDataSource.setTimeBetweenEvictionRunsMillis(properties.getTimeBetweenEvictionRunsMillis());
+            druidDataSource.setMinEvictableIdleTimeMillis(properties.getMinEvictableIdleTimeMillis());
+            druidDataSource.setValidationQuery(properties.getValidationQuery());
+            druidDataSource.setTestWhileIdle(properties.getTestWhileIdle());
+            druidDataSource.setTestOnBorrow(properties.getTestOnBorrow());
+            druidDataSource.setTestOnReturn(properties.getTestOnReturn());
+            druidDataSource.setPoolPreparedStatements(properties.getPoolPreparedStatements());
+            try {
+                druidDataSource.setFilters(properties.getFilters());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            druidDataSource.setMaxPoolPreparedStatementPerConnectionSize(properties.getMaxPoolPreparedStatementPerConnectionSize());
+            druidDataSource.setUseGlobalDataSourceStat(properties.getUseGlobalDataSourceStat());
+            druidDataSource.setConnectProperties(properties.getConnectionProperties());
+            dataSourceList.add(druidDataSource);
         }
-        druidDataSource.setMaxPoolPreparedStatementPerConnectionSize(slaveProperties.getMaxPoolPreparedStatementPerConnectionSize());
-        druidDataSource.setUseGlobalDataSourceStat(slaveProperties.getUseGlobalDataSourceStat());
-        druidDataSource.setConnectProperties(slaveProperties.getConnectionProperties());
         logger.info("slave datasource init success...");
-        return druidDataSource;
+        return dataSourceList;
     }
 
     /**
@@ -125,7 +125,9 @@ public class DataBaseConfiguration {
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put("master", masterDataSource());
-        targetDataSources.put("slave", slaveDataSource());
+        for (int i = 0; i < slaveDataSource().size(); i++) {
+            targetDataSources.put("slave" + i, slaveDataSource().get(i));
+        }
         dynamicDataSource.setTargetDataSources(targetDataSources);
         dynamicDataSource.setDefaultTargetDataSource(masterDataSource());
         logger.info("dynamic datasource init success...");

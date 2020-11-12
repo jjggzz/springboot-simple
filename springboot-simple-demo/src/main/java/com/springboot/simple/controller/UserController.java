@@ -4,9 +4,11 @@ import com.springboot.simple.async.DemoHandler;
 import com.springboot.simple.base.async.EventPusher;
 import com.springboot.simple.base.async.event.BaseEvent;
 import com.springboot.simple.model.UserModel;
+import com.springboot.simple.res.ResultEntity;
 import com.springboot.simple.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.TimeUnit;
@@ -36,10 +38,10 @@ public class UserController{
         userService.save(userModel);
     }
 
-//    @GetMapping("user/{id}")
-//    public ResultEntity<?> get(@PathVariable("id") Long id){
-//        return new ResultEntity<UserModel>(ResultEnum.SUCCESS,userService.getById(id));
-//    }
+    @GetMapping("user/{id}")
+    public ResultEntity<UserModel> get(@PathVariable("id") Long id){
+        return ResultEntity.success(userService.getById(id));
+    }
 
     @GetMapping("user/count")
     public Integer count(){
