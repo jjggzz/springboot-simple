@@ -16,5 +16,4 @@ public interface BaseService<T,E> {
 
     int count(E example);
 
-
 }

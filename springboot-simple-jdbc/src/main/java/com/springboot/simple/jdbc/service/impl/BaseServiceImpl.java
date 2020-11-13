@@ -43,5 +43,4 @@ public class BaseServiceImpl<T extends BaseModel,D extends BaseModelMapper<T,E>,
         return this.mapper.countByExample(example);
     }
 
-
 }

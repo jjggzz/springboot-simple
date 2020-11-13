@@ -7,8 +7,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * TODO
- *
+ * 基础的事件发布者,通过他发我我们定义好的事件
  * @author jgz
  * CreateTime 2020/8/22 9:34
  */

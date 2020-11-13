@@ -4,8 +4,7 @@ import com.springboot.simple.base.async.interfaces.BaseHandlerInterface;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * TODO
- *
+ * 预定义的事件
  * @author jgz
  * CreateTime 2020/8/22 9:43
  */

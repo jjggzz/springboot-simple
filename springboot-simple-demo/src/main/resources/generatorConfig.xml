@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 
-    <classPathEntry location="D:\driver\mysql-connector-java-5.1.6.jar" />
+<!--    <classPathEntry location="D:\driver\mysql-connector-java-5.1.6.jar" />-->
     <!-- 生成dal配置 -->
     <context id="demo" targetRuntime="MyBatis3">
         <property name="suppressAllComments" value="true"/>

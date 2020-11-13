@@ -32,16 +32,12 @@ public class UserController extends BaseController {
 
     @GetMapping("/user")
     public void add(){
-        UserModel userModel = new UserModel();
-        userModel.setName("zhangs");
-        userModel.setAge(18);
-        userModel.setSex("男");
-        userService.save(userModel);
+        HttpServletRequest request = getRequest();
+        //......剩下的业务操作
     }
 
     @GetMapping("user/{id}")
-    public ResultEntity<?> get(@PathVariable("id") Long id){
-        HttpServletRequest request = getRequest();
+    public ResultEntity<UserModel> get(@PathVariable("id") Long id){
         return ResultEntity.success(userService.getById(id));
     }
 

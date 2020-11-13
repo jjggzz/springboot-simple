@@ -8,8 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 /**
- * TODO
- *
+ * 异步事件处理监听器,逻辑在此调用
  * @author jgz
  * CreateTime 2020/8/22 9:38
  */
