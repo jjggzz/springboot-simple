@@ -3,8 +3,8 @@ package com.springboot.simple.jdbc.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.springboot.simple.jdbc.datasource.DynamicDataSource;
 import com.springboot.simple.jdbc.properties.JdbcProperties;
-import com.springboot.simple.jdbc.properties.MasterProperties;
 import com.springboot.simple.jdbc.properties.SlaveProperties;
+import org.apache.commons.collections4.CollectionUtils;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,10 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 数据库配置
@@ -83,6 +86,9 @@ public class DataBaseConfiguration {
     public List<DataSource> slaveDataSource() {
         logger.info("slave datasource init start...");
         List<DataSource> dataSourceList = new ArrayList<>();
+        if (CollectionUtils.isEmpty(jdbcProperties.getSlaveList())) {
+            return dataSourceList;
+        }
         for (SlaveProperties properties : jdbcProperties.getSlaveList()) {
             DruidDataSource druidDataSource = new DruidDataSource();
             druidDataSource.setDriverClassName(properties.getDriverClassName());
