@@ -26,8 +26,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResultEntity<?> globalException(Exception e){
         //业务异常则抛出自定义的异常信息
-        if(e instanceof GlobalException){
-            return ResultEntity.failure(((GlobalException) e).getCode(), e.getMessage());
+        if(e instanceof BusinessException){
+            return ResultEntity.failure(((BusinessException) e).getCode(), e.getMessage());
         }
         logger.error(e.getMessage());
         return ResultEntity.failure("系统正在忙");

@@ -6,17 +6,17 @@ import com.springboot.simple.res.BaseResultEnum;
  * @author jgz
  * CreateTime 2020/4/23 11:26
  */
-public class GlobalException extends RuntimeException {
+public class BusinessException extends RuntimeException {
     private Integer code;
     private String message;
 
-    public GlobalException(Integer code,String message) {
+    public BusinessException(Integer code,String message) {
         super(message);
         this.code = code;
         this.message = message;
     }
 
-    public GlobalException(BaseResultEnum baseResultEnum) {
+    public BusinessException(BaseResultEnum baseResultEnum) {
         super(baseResultEnum.getMessage());
         this.code = baseResultEnum.getCode();
         this.message = baseResultEnum.getMessage();

@@ -1,5 +1,6 @@
 package com.springboot.simple.service.impl;
 
+import com.springboot.simple.exception.BusinessException;
 import com.springboot.simple.jdbc.annotation.DataSource;
 import com.springboot.simple.jdbc.datasource.DynamicDataSource;
 import com.springboot.simple.jdbc.service.impl.BaseServiceImpl;
@@ -31,9 +32,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserModel, UserModelMapper,
 
     @Override
     public UserModel getById(Long id) {
-//        if(id == 100){
-//            throw new GlobalException("信息不存在");
-//        }
+        //抛出异常,返回给前端的是系统忙
+        int i = 1/0;
+        if(id == 100){
+            //自定义抛出业务异常
+            throw new BusinessException(1000,"信息不存在");
+        }
         return selectByPrimaryKey(id);
     }
 

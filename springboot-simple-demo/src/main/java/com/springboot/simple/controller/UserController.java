@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * CreateTime 2020/3/26 21:42
  */
 @RestController
-public class UserController{
+public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
@@ -40,6 +41,7 @@ public class UserController{
 
     @GetMapping("user/{id}")
     public ResultEntity<?> get(@PathVariable("id") Long id){
+        HttpServletRequest request = getRequest();
         return ResultEntity.success(userService.getById(id));
     }
 
