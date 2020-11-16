@@ -271,6 +271,7 @@ eventPusher.eventPush(new BaseEvent(new DemoHandler("张三",18)));
 # 6.license
 小玩具,估计大佬也看不上,随便玩
 # 7.expectation
+  MVC分页支持...\
   reids模块要支持哨兵\\集群的连接(目前单机..)\
   jdbc的逆向工程相关要支持自动继承相关base接口,强制的前置条件可做自定义\
   oss完善...\
