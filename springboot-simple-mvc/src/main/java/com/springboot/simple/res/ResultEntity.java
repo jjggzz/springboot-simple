@@ -24,6 +24,8 @@ public class ResultEntity<T> implements Serializable {
      */
     private T data;
 
+    public ResultEntity(){}
+
 
     private ResultEntity(HttpStatus httpStatus,T data){
         this.code = httpStatus.value();
