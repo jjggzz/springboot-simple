@@ -1,6 +1,6 @@
 
 # 1.background
-  我太难了!!之前在公司上班,受老大哥启发[@likowong](https://github.com/likowong),再加上自己也厌烦了项目中的一大堆配置.虽然springboot已经够简单了,但是也免不了要写点自定义的配置类,就想着能不能把这些重复的东西抽出来,因为配置都大同小异.比如说动态数据源\\全局异常处理\\mysql主从动态数据源\\异步事件调用抽取等等,所以才有了这个东东.
+  之前在公司上班,受老大哥启发[@likowong](https://github.com/likowong),再加上自己也厌烦了项目中的一大堆配置.虽然springboot已经够简单了,但是也免不了要写点自定义的配置类,就想着能不能把这些重复的东西抽出来,因为配置都大同小异.比如说动态数据源\\全局异常处理\\mysql主从动态数据源\\异步事件调用抽取等等,所以才有了这个东东.
 # 2.structure
   ````
   springboot-simple
@@ -272,7 +272,7 @@ eventPusher.eventPush(new BaseEvent(new DemoHandler("张三",18)));
 小玩具,估计大佬也看不上,随便玩
 # 7.expectation
   MVC分页支持...\
-  reids模块要支持哨兵\\集群的连接(目前单机..)\
+  reids模块要支持哨兵\\集群的连接(目前单机..)\\缓存机制注解实现\
   jdbc的逆向工程相关要支持自动继承相关base接口,强制的前置条件可做自定义\
   oss完善...\
   mongoDB...\
