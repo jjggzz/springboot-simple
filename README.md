@@ -265,12 +265,7 @@ private EventPusher eventPusher;
 //事件发布
 eventPusher.eventPush(new BaseEvent(new DemoHandler("张三",18)));
 ````
-
-# 5.maintainer
-我自己(想一起玩的可以给我发消息)
-# 6.license
-小玩具,估计大佬也看不上,随便玩
-# 7.expectation
+# 5.expectation
   MVC分页支持...\
   reids模块要支持哨兵\\集群的连接(目前单机..)\\缓存机制注解实现\
   jdbc的逆向工程相关要支持自动继承相关base接口,强制的前置条件可做自定义\
