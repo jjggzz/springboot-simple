@@ -1,5 +1,8 @@
 package com.springboot.simple.controller;
 
+import com.springboot.simple.base.fun.ICustomer;
+import com.springboot.simple.base.fun.IFunction;
+import com.springboot.simple.res.ResultEntity;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -19,6 +22,30 @@ public abstract class BaseController {
 
     protected HttpServletResponse getResponse(){
         return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
+    }
+
+    /**
+     * 处理业务并返回数据
+     * @param param
+     * @param callback
+     * @param <T>
+     * @param <E>
+     * @return
+     * @throws Exception
+     */
+    protected <T,E> ResultEntity<E> result(T param, IFunction<T,ResultEntity<E>> callback) throws Exception {
+        return callback.apply(param);
+    }
+
+    /**
+     * 处理业务不返回数据
+     * @param param
+     * @param callback
+     * @param <T>
+     * @throws Exception
+     */
+    protected <T> void noResult(T param, ICustomer<T> callback) throws Exception {
+        callback.accept(param);
     }
 
 }

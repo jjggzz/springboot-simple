@@ -33,6 +33,11 @@ public class ResultEntity<T> implements Serializable {
         this.data = data;
     }
 
+    private ResultEntity(BaseResultEnum resultEnum){
+        this.code = resultEnum.getCode();
+        this.message = resultEnum.getMessage();
+    }
+
     private ResultEntity(BaseResultEnum resultEnum,T data){
         this.code = resultEnum.getCode();
         this.message = resultEnum.getMessage();
@@ -45,44 +50,44 @@ public class ResultEntity<T> implements Serializable {
     }
 
     public static <T> ResultEntity<T> success(){
-        return new ResultEntity<>(ResultCollection.SUCCESS,null);
+        return new ResultEntity<T>(ResultCollection.SUCCESS);
     }
 
     public static <T> ResultEntity<T> success(T data){
-        return new ResultEntity<>(ResultCollection.SUCCESS,data);
+        return new ResultEntity<T>(ResultCollection.SUCCESS,data);
     }
 
     public static <T> ResultEntity<T> success(BaseResultEnum resultEnum){
-        return new ResultEntity<>(resultEnum,null);
+        return new ResultEntity<T>(resultEnum,null);
     }
 
     public static <T> ResultEntity<T> success(BaseResultEnum resultEnum,T data){
-        return new ResultEntity<>(resultEnum,data);
+        return new ResultEntity<T>(resultEnum,data);
     }
 
     public static <T> ResultEntity<T> success(HttpStatus httpStatus){
-        return new ResultEntity<>(httpStatus,null);
+        return new ResultEntity<T>(httpStatus,null);
     }
 
     public static <T> ResultEntity<T> success(HttpStatus httpStatus,T data){
-        return new ResultEntity<>(httpStatus,data);
+        return new ResultEntity<T>(httpStatus,data);
     }
 
     public static <T> ResultEntity<T> failure(){
-        return new ResultEntity<>(ResultCollection.FAILURE,null);
+        return new ResultEntity<T>(ResultCollection.FAILURE,null);
     }
 
     public static <T> ResultEntity<T> failure(BaseResultEnum resultEnum){
-        return new ResultEntity<>(resultEnum,null);
+        return new ResultEntity<T>(resultEnum,null);
     }
 
 
     public static <T> ResultEntity<T> failure(Integer code,String message){
-        return new ResultEntity<>(code,message);
+        return new ResultEntity<T>(code,message);
     }
 
     public static <T> ResultEntity<T> failure(String message){
-        return new ResultEntity<>(-1,message);
+        return new ResultEntity<T>(-1,message);
     }
 
     public Integer getCode() {
