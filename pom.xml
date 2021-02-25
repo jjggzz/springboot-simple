@@ -14,6 +14,7 @@
         <module>springboot-simple-mvc</module>
         <module>springboot-simple-aliyun-oss</module>
         <module>springboot-simple-support</module>
+        <module>springboot-simple-exception</module>
     </modules>
     <name>springboot-simple</name>
     <description>Demo project for Spring Boot</description>

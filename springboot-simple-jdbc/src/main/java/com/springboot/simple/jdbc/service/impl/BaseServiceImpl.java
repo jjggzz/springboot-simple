@@ -56,11 +56,11 @@ public class BaseServiceImpl<T extends BaseModel,D extends BaseModelMapper<T,E>,
         return this.mapper.updateByPrimaryKeySelective(model);
     }
 
-    public  T selectByPrimaryKey(Long id){
+    public T selectByPrimaryKey(Long id){
         return this.mapper.selectByPrimaryKey(id);
     }
 
-    List<T> selectByExample(E example){
+    public List<T> selectByExample(E example) {
         return this.mapper.selectByExample(example);
     }
 

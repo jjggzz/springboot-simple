@@ -1,12 +1,26 @@
 package com.springboot.simple.res;
 
-/**
- * @author jgz
- * CreateTime 2020/4/23 11:08
- */
-public interface BaseResultEnum {
+import com.springboot.simple.exception.BusinessExceptionAssert;
 
-    Integer getCode();
+public enum BaseResultEnum implements BusinessExceptionAssert {
+    SUCCESS(200,"操作成功"),
+    FAILURE(500,"系统正在忙");
 
-    String getMessage();
+    BaseResultEnum(Integer code,String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    private final Integer code;
+    private final String message;
+
+    @Override
+    public Integer getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }

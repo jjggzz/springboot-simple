@@ -1,5 +1,6 @@
 package com.springboot.simple.res;
 
+import com.springboot.simple.exception.IResultEnum;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
@@ -33,14 +34,14 @@ public class ResultEntity<T> implements Serializable {
         this.data = data;
     }
 
-    private ResultEntity(BaseResultEnum resultEnum){
-        this.code = resultEnum.getCode();
-        this.message = resultEnum.getMessage();
+    private ResultEntity(IResultEnum iResultEnum){
+        this.code = iResultEnum.getCode();
+        this.message = iResultEnum.getMessage();
     }
 
-    private ResultEntity(BaseResultEnum resultEnum,T data){
-        this.code = resultEnum.getCode();
-        this.message = resultEnum.getMessage();
+    private ResultEntity(IResultEnum iResultEnum, T data){
+        this.code = iResultEnum.getCode();
+        this.message = iResultEnum.getMessage();
         this.data = data;
     }
 
@@ -50,11 +51,11 @@ public class ResultEntity<T> implements Serializable {
     }
 
     public static <T> ResultEntity<T> success(){
-        return new ResultEntity<T>(ResultCollection.SUCCESS);
+        return new ResultEntity<T>(BaseResultEnum.SUCCESS);
     }
 
     public static <T> ResultEntity<T> success(T data){
-        return new ResultEntity<T>(ResultCollection.SUCCESS,data);
+        return new ResultEntity<T>(BaseResultEnum.SUCCESS,data);
     }
 
     public static <T> ResultEntity<T> success(BaseResultEnum resultEnum){
@@ -74,7 +75,7 @@ public class ResultEntity<T> implements Serializable {
     }
 
     public static <T> ResultEntity<T> failure(){
-        return new ResultEntity<T>(ResultCollection.FAILURE,null);
+        return new ResultEntity<T>(BaseResultEnum.FAILURE,null);
     }
 
     public static <T> ResultEntity<T> failure(BaseResultEnum resultEnum){

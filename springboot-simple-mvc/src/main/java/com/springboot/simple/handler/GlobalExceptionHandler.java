@@ -1,5 +1,6 @@
-package com.springboot.simple.exception;
+package com.springboot.simple.handler;
 
+import com.springboot.simple.exception.BusinessException;
 import com.springboot.simple.res.ResultEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

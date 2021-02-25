@@ -17,6 +17,11 @@
             <artifactId>springboot-simple-base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.jgz</groupId>
+            <artifactId>springboot-simple-exception</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!--springboot web版本控制-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

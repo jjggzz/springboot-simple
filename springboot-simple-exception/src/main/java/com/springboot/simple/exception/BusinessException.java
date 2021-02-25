@@ -1,7 +1,5 @@
 package com.springboot.simple.exception;
 
-import com.springboot.simple.res.BaseResultEnum;
-
 /**
  * @author jgz
  * CreateTime 2020/4/23 11:26
@@ -16,10 +14,10 @@ public class BusinessException extends RuntimeException {
         this.message = message;
     }
 
-    public BusinessException(BaseResultEnum baseResultEnum) {
-        super(baseResultEnum.getMessage());
-        this.code = baseResultEnum.getCode();
-        this.message = baseResultEnum.getMessage();
+    public BusinessException(IResultEnum iResultEnum) {
+        super(iResultEnum.getMessage());
+        this.code = iResultEnum.getCode();
+        this.message = iResultEnum.getMessage();
     }
 
     public Integer getCode() {
