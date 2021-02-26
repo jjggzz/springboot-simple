@@ -25,9 +25,6 @@ public class ResultEntity<T> implements Serializable {
      */
     private T data;
 
-    public ResultEntity(){}
-
-
     private ResultEntity(HttpStatus httpStatus,T data){
         this.code = httpStatus.value();
         this.message = httpStatus.getReasonPhrase();
@@ -51,44 +48,44 @@ public class ResultEntity<T> implements Serializable {
     }
 
     public static <T> ResultEntity<T> success(){
-        return new ResultEntity<T>(BaseResultEnum.SUCCESS);
+        return new ResultEntity<>(BaseResultEnum.SUCCESS);
     }
 
     public static <T> ResultEntity<T> success(T data){
-        return new ResultEntity<T>(BaseResultEnum.SUCCESS,data);
+        return new ResultEntity<>(BaseResultEnum.SUCCESS,data);
     }
 
-    public static <T> ResultEntity<T> success(BaseResultEnum resultEnum){
-        return new ResultEntity<T>(resultEnum,null);
+    public static <T> ResultEntity<T> success(IResultEnum iResultEnum){
+        return new ResultEntity<>(iResultEnum,null);
     }
 
-    public static <T> ResultEntity<T> success(BaseResultEnum resultEnum,T data){
-        return new ResultEntity<T>(resultEnum,data);
+    public static <T> ResultEntity<T> success(IResultEnum iResultEnum,T data){
+        return new ResultEntity<>(iResultEnum,data);
     }
 
     public static <T> ResultEntity<T> success(HttpStatus httpStatus){
-        return new ResultEntity<T>(httpStatus,null);
+        return new ResultEntity<>(httpStatus,null);
     }
 
     public static <T> ResultEntity<T> success(HttpStatus httpStatus,T data){
-        return new ResultEntity<T>(httpStatus,data);
+        return new ResultEntity<>(httpStatus,data);
     }
 
     public static <T> ResultEntity<T> failure(){
-        return new ResultEntity<T>(BaseResultEnum.FAILURE,null);
+        return new ResultEntity<>(BaseResultEnum.FAILURE,null);
     }
 
-    public static <T> ResultEntity<T> failure(BaseResultEnum resultEnum){
-        return new ResultEntity<T>(resultEnum,null);
+    public static <T> ResultEntity<T> failure(IResultEnum iResultEnum){
+        return new ResultEntity<>(iResultEnum,null);
     }
 
 
     public static <T> ResultEntity<T> failure(Integer code,String message){
-        return new ResultEntity<T>(code,message);
+        return new ResultEntity<>(code,message);
     }
 
     public static <T> ResultEntity<T> failure(String message){
-        return new ResultEntity<T>(-1,message);
+        return new ResultEntity<>(BaseResultEnum.FAILURE.getCode(),message);
     }
 
     public Integer getCode() {

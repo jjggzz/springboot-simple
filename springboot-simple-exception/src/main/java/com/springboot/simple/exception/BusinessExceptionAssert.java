@@ -11,4 +11,10 @@ public interface BusinessExceptionAssert extends IResultEnum,Assert {
     default BusinessException newException(Integer code, String message){
         return new BusinessException(code,message);
     }
+
+    @Override
+    default BusinessException newException(String message){
+        return new BusinessException(this.getCode(),message);
+    }
+
 }
