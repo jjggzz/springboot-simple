@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
  * @desc 动态编译工具
  **/
 public class DynamicCompileUtils {
-    private static GroovyClassLoader groovyClassLoader = new GroovyClassLoader();
+    private static final GroovyClassLoader groovyClassLoader = new GroovyClassLoader();
 
     /**
      * 根据代码模板生成字节码对象

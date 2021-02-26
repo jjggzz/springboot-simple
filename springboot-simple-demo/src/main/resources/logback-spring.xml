@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <!--指定property属性变量-->
+    <property name="log.path" value="/logs/springboot-simple-demo"/>
+
+    <!-- 日志输出格式
+     %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+     -->
+    <!-- 控制台 appender-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <!-- 文件 滚动日志 (info级别)-->
+    <appender name="infoAppend"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 当前日志输出路径、文件名 -->
+        <file>${log.path}/info/info.log</file>
+        <!--日志输出格式-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!--历史日志归档策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 历史日志： 归档文件名 -->
+            <fileNamePattern>${log.path}/info/%d{yyyy-MM, aux}/info.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <!--单个文件的最大大小-->
+            <maxFileSize>64MB</maxFileSize>
+            <!--日志文件保留天数-->
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <!-- 此日志文档只记录info级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+    <!-- 文件 滚动日志 (error级别)-->
+    <appender name="errAppend"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 当前日志输出路径、文件名 -->
+        <file>${log.path}/error/error.log</file>
+        <!--日志输出格式-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <!--历史日志归档策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 历史日志： 归档文件名 -->
+            <fileNamePattern>${log.path}/error/%d{yyyy-MM, aux}/error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <!--单个文件的最大大小-->
+            <maxFileSize>64MB</maxFileSize>
+            <!--日志文件保留天数-->
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+
+        <!-- 此日志文档只记录error级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+    <!-- root 级别的配置 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="infoAppend" />
+    </root>
+
+    <root level="ERROR">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="errAppend" />
+    </root>
+
+
+    <!--可输出mapper层sql语句等-->
+    <logger name="com.springboot.simple" level="debug">
+    </logger>
+
+    <!--输出jdbc 事务相关信息-->
+    <logger name="org.springframework.jdbc" level="debug">
+    </logger>
+
+
+</configuration>

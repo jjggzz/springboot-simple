@@ -20,7 +20,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfiguration {
 
-    private Logger logger = LoggerFactory.getLogger(RedisConfiguration.class);
+    protected Logger LOGGER = LoggerFactory.getLogger(getClass());
     /**
      * 实例化 redisTemplate
      * @param factory RedisConnectionFactory
@@ -28,7 +28,7 @@ public class RedisConfiguration {
      */
     @Bean
     public RedisTemplate<String,String> redisTemplate(RedisConnectionFactory factory){
-        logger.info("redis init start...");
+        LOGGER.debug("redis init start...");
         RedisTemplate<String,String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);
         GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer();
@@ -38,7 +38,7 @@ public class RedisConfiguration {
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
         redisTemplate.afterPropertiesSet();
-        logger.info("redis init success...");
+        LOGGER.debug("redis init success...");
         return redisTemplate;
     }
 

@@ -33,7 +33,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "mybatis")
 public class DataBaseConfiguration {
 
-    private Logger logger = LoggerFactory.getLogger(DataBaseConfiguration.class);
+    protected Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private JdbcProperties jdbcProperties;
@@ -48,7 +48,7 @@ public class DataBaseConfiguration {
      */
     @Bean(name = "master")
     public DataSource masterDataSource() {
-        logger.info("master datasource init start...");
+        LOGGER.debug("master datasource init start...");
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setDriverClassName(jdbcProperties.getMaster().getDriverClassName());
         druidDataSource.setUrl(jdbcProperties.getMaster().getUrl());
@@ -74,7 +74,7 @@ public class DataBaseConfiguration {
         druidDataSource.setMaxPoolPreparedStatementPerConnectionSize(jdbcProperties.getMaster().getMaxPoolPreparedStatementPerConnectionSize());
         druidDataSource.setUseGlobalDataSourceStat(jdbcProperties.getMaster().getUseGlobalDataSourceStat());
         druidDataSource.setConnectProperties(jdbcProperties.getMaster().getConnectionProperties());
-        logger.info("master datasource init success...");
+        LOGGER.debug("master datasource init success...");
         return druidDataSource;
     }
 
@@ -84,7 +84,7 @@ public class DataBaseConfiguration {
      */
     @Bean(name = "slaveList")
     public List<DataSource> slaveDataSource() {
-        logger.info("slave datasource init start...");
+        LOGGER.debug("slave datasource init start...");
         List<DataSource> dataSourceList = new ArrayList<>();
         if (CollectionUtils.isEmpty(jdbcProperties.getSlaveList())) {
             return dataSourceList;
@@ -117,7 +117,7 @@ public class DataBaseConfiguration {
             druidDataSource.setConnectProperties(properties.getConnectionProperties());
             dataSourceList.add(druidDataSource);
         }
-        logger.info("slave datasource init success...");
+        LOGGER.debug("slave datasource init success...");
         return dataSourceList;
     }
 
@@ -127,7 +127,7 @@ public class DataBaseConfiguration {
      */
     @Bean
     public DynamicDataSource dynamicDataSource(){
-        logger.info("dynamic datasource init start...");
+        LOGGER.debug("dynamic datasource init start...");
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put("master", masterDataSource());
@@ -136,7 +136,7 @@ public class DataBaseConfiguration {
         }
         dynamicDataSource.setTargetDataSources(targetDataSources);
         dynamicDataSource.setDefaultTargetDataSource(masterDataSource());
-        logger.info("dynamic datasource init success...");
+        LOGGER.debug("dynamic datasource init success...");
         return dynamicDataSource;
     }
 
@@ -147,7 +147,7 @@ public class DataBaseConfiguration {
      */
     @Bean
     public SqlSessionFactoryBean sqlSessionFactoryBean() throws IOException {
-        logger.info("mybatis sqlfactory init start...");
+        LOGGER.debug("mybatis sqlFactory init start...");
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         //设置动态数据源
         sqlSessionFactoryBean.setDataSource(dynamicDataSource());
@@ -156,7 +156,7 @@ public class DataBaseConfiguration {
         //设置mapper.xml的路径
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactoryBean.setMapperLocations(resourcePatternResolver.getResources(mapperLocations));
-        logger.info("mybatis sqlfactory init success...");
+        LOGGER.debug("mybatis sqlFactory init success...");
         return sqlSessionFactoryBean;
     }
 

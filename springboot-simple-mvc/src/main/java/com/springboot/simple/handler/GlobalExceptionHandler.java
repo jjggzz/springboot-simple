@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ResponseBody
 public class GlobalExceptionHandler {
 
-    private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    protected Logger LOGGER = LoggerFactory.getLogger(getClass());
     /**
      * 全局异常
      * @return ResultEntity
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
         if(e instanceof BusinessException){
             return ResultEntity.failure(((BusinessException) e).getCode(), e.getMessage());
         }
-        logger.error(e.getMessage());
+        LOGGER.error("系统异常: ",e);
         return ResultEntity.failure("系统正在忙");
     }
 

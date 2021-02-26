@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2020/6/5 18:19
  **/
 public class LocalCacheUtils {
-    private static Map<String,Data> cache = new ConcurrentHashMap<>();
+    private static final Map<String,Data> cache = new ConcurrentHashMap<>();
 
     private static class Data {
         private String key;

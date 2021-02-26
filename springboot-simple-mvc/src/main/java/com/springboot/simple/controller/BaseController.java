@@ -3,6 +3,8 @@ package com.springboot.simple.controller;
 import com.springboot.simple.base.fun.ICustomer;
 import com.springboot.simple.base.fun.IFunction;
 import com.springboot.simple.res.ResultEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -15,6 +17,8 @@ import java.util.Objects;
  * CreateTime 2020/4/23 11:26
  */
 public abstract class BaseController {
+
+    protected Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     protected HttpServletRequest getRequest(){
         return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
