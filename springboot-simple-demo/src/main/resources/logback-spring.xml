@@ -9,10 +9,40 @@
      -->
     <!-- 控制台 appender-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
+    </appender>
+
+    <!-- 文件 滚动日志 (debug级别)-->
+    <appender name="debugAppend"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 当前日志输出路径、文件名 -->
+        <file>${log.path}/debug/debug.log</file>
+        <!--日志输出格式-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!--历史日志归档策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 历史日志： 归档文件名 -->
+            <fileNamePattern>${log.path}/debug/%d{yyyy-MM, aux}/debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <!--单个文件的最大大小-->
+            <maxFileSize>64MB</maxFileSize>
+            <!--日志文件保留天数-->
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <!-- 此日志文档只记录debug级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
     </appender>
 
 
@@ -36,15 +66,42 @@
         </rollingPolicy>
         <!-- 此日志文档只记录info级别的 -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>info</level>
+            <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
 
+    <!-- 文件 滚动日志 (warn级别)-->
+    <appender name="warnAppend"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 当前日志输出路径、文件名 -->
+        <file>${log.path}/warn/warn.log</file>
+        <!--日志输出格式-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <!--历史日志归档策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 历史日志： 归档文件名 -->
+            <fileNamePattern>${log.path}/warn/%d{yyyy-MM, aux}/warn.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <!--单个文件的最大大小-->
+            <maxFileSize>64MB</maxFileSize>
+            <!--日志文件保留天数-->
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+
+        <!-- 此日志文档只记录warn级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
 
     <!-- 文件 滚动日志 (error级别)-->
-    <appender name="errAppend"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="errorAppend"  class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 当前日志输出路径、文件名 -->
         <file>${log.path}/error/error.log</file>
         <!--日志输出格式-->
@@ -65,22 +122,20 @@
 
         <!-- 此日志文档只记录error级别的 -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>error</level>
+            <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
 
 
-    <!-- root 级别的配置 -->
-    <root level="INFO">
+    <!-- root 级别的配置,只有在这里配置,才会将日志打印到对应的文件中 -->
+    <root level="root">
         <appender-ref ref="CONSOLE" />
+<!--        <appender-ref ref="debugAppend"/>-->
         <appender-ref ref="infoAppend" />
-    </root>
-
-    <root level="ERROR">
-        <appender-ref ref="CONSOLE" />
-        <appender-ref ref="errAppend" />
+        <appender-ref ref="warnAppend" />
+        <appender-ref ref="errorAppend" />
     </root>
 
 
