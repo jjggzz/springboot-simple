@@ -17,11 +17,11 @@
             <!--<artifactId>springboot-simple-aliyun-oss</artifactId>-->
             <!--<version>0.0.1-SNAPSHOT</version>-->
         <!--</dependency>-->
-        <dependency>
-            <groupId>com.jgz</groupId>
-            <artifactId>springboot-simple-jdbc</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.jgz</groupId>-->
+<!--            <artifactId>springboot-simple-jdbc</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.jgz</groupId>
             <artifactId>springboot-simple-mvc</artifactId>
@@ -37,6 +37,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.jgz</groupId>
+            <artifactId>springboot-simple-redis</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
@@ -44,6 +49,15 @@
         <dependency>
             <groupId>net.sourceforge.jtds</groupId>
             <artifactId>jtds</artifactId>
+        </dependency>
+        <!-- swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
     </dependencies>
 
